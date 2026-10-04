@@ -222,7 +222,6 @@ Likes: automating boring things, breaking (then fixing) systems, CTFs.`),
       run: () => print(
 `<span class="t-acc">insulin-pump-sim/</span>    C++ · Qt — real-time insulin pump simulator      ${link("https://github.com/rayjini/Insulin-Pump-Solution", "repo")}
 <span class="t-acc">worldcup-stats/</span>      Python · SQLite — World Cup winners & scorers     ${link("https://github.com/rayjini/FIFA-World-Cup-Winners-Scorers", "repo")}
-<span class="t-acc">auto-applier/</span>        Node · Playwright — application automation       ${link("https://github.com/rayjini/tesla-auto-applier", "repo")}
 <span class="t-acc">curling-game/</span>        JS · Canvas — two-player curling + live chat${link("https://github.com/rayjini/Curling-Game", "repo")}
 <span class="t-acc">itunes-search/</span>       Express — iTunes API song search                 ${link("https://github.com/rayjini/ITunes-API-App", "repo")}
 <span class="t-acc">image-encoder/</span>       C — bit packing & run-length encoding            ${link("https://github.com/rayjini/Ghost-Hunting-Game", "repo")}
