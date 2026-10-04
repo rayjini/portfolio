@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rayan Ourdjini — Software Developer & Cybersecurity</title>
+  <meta name="description" content="Portfolio of Rayan Ourdjini — Computer Science (Cybersecurity) student at Carleton University, software developer and DevOps / security intern.">
+  <meta property="og:title" content="Rayan Ourdjini — Portfolio">
+  <meta property="og:description" content="Software developer, DevOps and cybersecurity. Kubernetes, Docker, Ansible, CI/CD, security assessments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0d12'/><text x='50' y='66' font-family='monospace' font-size='52' font-weight='700' text-anchor='middle' fill='%235eead4'>R_</text></svg>">
+</head>
+<body>
+  <canvas id="bg" aria-hidden="true"></canvas>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="logo">rayan<span class="accent">@</span>ourdjini<span class="blink">_</span></a>
+    <nav>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#terminal">terminal</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-text">
+          <p class="eyebrow mono"><span class="dot"></span> Looking for Winter 2027 &amp; Summer 2027 roles</p>
+          <h1>Hi, I'm <span class="gradient">Rayan Ourdjini</span>.</h1>
+          <p class="typed mono">&gt; <span id="typed"></span><span class="caret">|</span></p>
+          <p class="lead">
+            Computer Science (Cybersecurity) student at Carleton University. I automate infrastructure,
+            ship CI/CD pipelines, and hunt down security gaps — most recently at
+            <strong>Shared Services Canada</strong>, <strong>National Defence</strong> and the <strong>CRA</strong>.
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#projects">View my work</a>
+            <a class="btn" href="#terminal">Try the terminal ↓</a>
+          </div>
+        </div>
+        <figure class="portrait tilt">
+          <img src="images/profile.jpg" alt="Rayan Ourdjini" width="600" height="800">
+        </figure>
+      </div>
+      <ul class="stats">
+        <li><span class="num" data-count="5">0</span><span class="label">internships</span></li>
+        <li><span class="num" data-count="10">0</span><span class="unit">+</span><span class="label">languages &amp; tools</span></li>
+        <li><span class="num">2027</span><span class="label">graduating, Carleton</span></li>
+      </ul>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">01.</span> Experience</h2>
+      <ol class="timeline">
+        <li class="job">
+          <div class="job-head">
+            <h3>Software Developer Intern</h3>
+            <span class="mono date">Jan 2026 – Aug 2026</span>
+          </div>
+          <p class="org">Shared Services Canada · Ottawa, ON</p>
+          <ul>
+            <li>Automated deployment and configuration for <b>10+ containerized services</b> with Kubernetes and Ansible, cutting provisioning from <b>2–4 hours to under 15 minutes</b>.</li>
+            <li>Shipped <b>Traefik</b> as reverse proxy and load balancer, enabling zero-downtime deploys and <b>doubling throughput</b> under peak load.</li>
+            <li>Stood up <b>GitLab Runner</b> for shared CI/CD, reducing release cycle time by <b>~70%</b> for 5+ engineers.</li>
+            <li>Containerized production apps with Docker and rolled updates across VMware vSphere, reaching <b>99%+ uptime</b> in a classified environment.</li>
+          </ul>        </li>
+        <li class="job">
+          <div class="job-head">
+            <h3>Cybersecurity Specialist Intern</h3>
+            <span class="mono date">Sep 2024 – Apr 2025</span>
+          </div>
+          <p class="org">National Defence (DND) · Gatineau, QC</p>
+          <ul>
+            <li>Ran security assessments of <b>3+ naval communication systems</b>, identifying <b>20+ critical configuration gaps</b> and driving remediation end-to-end.</li>
+            <li>Applied the Cybersecurity Risk Management Process (CS RMP) to document risk on classified systems for senior stakeholders.</li>
+            <li>Authored a remediation plan across 3+ platforms, cutting estimated risk exposure by <b>~40%</b>.</li>
+            <li>Supported declassification of sensitive technical documents with 100% compliance.</li>
+          </ul>        </li>
+        <li class="job">
+          <div class="job-head">
+            <h3>Software Developer Intern</h3>
+            <span class="mono date">Feb 2024 – Apr 2024</span>
+          </div>
+          <p class="org">Canada Revenue Agency · Ottawa, ON</p>
+          <ul>
+            <li>Built a <b>DHCP traffic monitoring</b> workflow that detected and removed <b>6+ rogue routers</b> across multiple CRA sites.</li>
+            <li>Collaborated on vulnerability remediation across enterprise systems, patching gaps and deploying updated protocols.</li>
+          </ul>        </li>
+      </ol>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">02.</span> Projects</h2>
+      <div class="cards">
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">{ }</span>
+            <span class="card-links">
+              <a class="card-link" href="https://youtu.be/2lVR6Kb2LBk" target="_blank" rel="noopener" aria-label="Demo video" title="Demo video">▶</a>
+              <a class="card-link" href="https://github.com/rayjini/Insulin-Pump-Solution" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>Insulin Pump Simulator</h3>
+          <p>Team-built, real-time simulation of the Tandem t:slim X2 insulin pump. Models dosing and alerts to mirror real device behaviour, with interrupt-based control logic for button presses and alarms under edge cases.</p>
+          <div class="tags"><span>C++</span><span>Qt</span><span>UML</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">⚽</span>
+            <span class="card-links">
+              <a class="card-link" href="https://github.com/rayjini/FIFA-World-Cup-Winners-Scorers" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>FIFA World Cup Winners &amp; Scorers</h3>
+          <p>Normalized SQLite schema and queries tracking every World Cup winner and top scorer, plus an automated analytics tool for statistical reporting with improved query performance.</p>
+          <div class="tags"><span>Python</span><span>SQLite</span><span>SQL</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">⚙</span>
+            <span class="card-links">
+              <a class="card-link" href="https://github.com/rayjini/tesla-auto-applier" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>Careers Auto-Applier</h3>
+          <p>Browser automation that fills out and submits internship applications through a live Chrome session using Playwright. Keeps personal data out of Git and tracks submitted jobs to avoid duplicates.</p>
+          <div class="tags"><span>JavaScript</span><span>Node.js</span><span>Playwright</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">●</span>
+            <span class="card-links">
+              <a class="card-link" href="https://youtu.be/yGUo3VXmKwY" target="_blank" rel="noopener" aria-label="Demo video" title="Demo video">▶</a>
+              <a class="card-link" href="https://github.com/rayjini/Curling-Game" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>Curling Game</h3>
+          <p>Two-player browser curling game with canvas rendering, stone physics and collision detection, plus a live chat between players over WebSockets on a Node.js server.</p>
+          <div class="tags"><span>JavaScript</span><span>Socket.IO</span><span>Canvas</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">♪</span>
+            <span class="card-links">
+              <a class="card-link" href="https://github.com/rayjini/ITunes-API-App" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>iTunes Song Search</h3>
+          <p>Express web app that searches the iTunes API by song title and displays matching tracks, with a Node.js backend proxying requests to Apple's search service.</p>
+          <div class="tags"><span>JavaScript</span><span>Express</span><span>REST API</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">01</span>
+            <span class="card-links">
+              <a class="card-link" href="https://github.com/rayjini/Ghost-Hunting-Game" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
+            </span>
+          </div>
+          <h3>Bit-Level Image Encoder</h3>
+          <p>C program that captures a pixel image and shrinks it using bitwise operations — packing pixels into bytes and run-length encoding the result.</p>
+          <div class="tags"><span>C</span><span>Bit Manipulation</span><span>Compression</span></div>
+        </article>
+        <article class="card tilt">
+          <div class="card-top">
+            <span class="card-icon mono">&gt;_</span>
+            <a class="card-link" href="https://github.com/rayjini/portfolio" target="_blank" rel="noopener" aria-label="Source code">↗</a>
+          </div>
+          <h3>This Portfolio</h3>
+          <p>Hand-written HTML, CSS and JavaScript with no frameworks — an interactive terminal, a mouse-reactive particle network and a few hidden easter eggs. Try <code>sudo</code>.</p>
+          <div class="tags"><span>JavaScript</span><span>Canvas</span><span>CSS</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">03.</span> Skills</h2>
+      <div class="filters" id="skill-filters">
+        <button class="active" data-filter="all">all</button>
+        <button data-filter="lang">languages</button>
+        <button data-filter="infra">infra &amp; devops</button>
+        <button data-filter="sec">security</button>
+        <button data-filter="web">frameworks</button>
+        <button data-filter="data">data &amp; ai</button>
+      </div>
+      <div class="skill-grid" id="skill-grid"></div>
+    </section>
+
+    <!-- Education & certs -->
+    <section id="education" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">04.</span> Education</h2>
+      <div class="edu">
+        <div class="edu-item">
+          <span class="mono date">Expected Dec 2027</span>
+          <h3>Carleton University</h3>
+          <p>B.Sc. Computer Science — Cybersecurity Stream</p>
+          <p class="muted">Object-Oriented Programming · Operating Systems · Data Structures &amp; Algorithms</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terminal -->
+    <section id="terminal" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">05.</span> Play around</h2>
+      <p class="section-sub">An actual terminal. Type <code>help</code> to see what it can do.</p>
+      <div class="term" id="term">
+        <div class="term-bar">
+          <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+          <span class="term-title mono">guest@rayan-portfolio: ~</span>
+        </div>
+        <div class="term-body mono" id="term-body">
+          <div id="term-out"></div>
+          <form id="term-form" class="term-line" autocomplete="off">
+            <label for="term-in" class="prompt">guest@rayan:~$</label>
+            <input id="term-in" type="text" spellcheck="false" aria-label="Terminal input">
+          </form>
+        </div>
+      </div>
+      <div class="chips" id="quick-cmds">
+        <button data-cmd="whoami">whoami</button>
+        <button data-cmd="ls projects">ls projects</button>
+        <button data-cmd="skills">skills</button>
+        <button data-cmd="neofetch">neofetch</button>
+        <button data-cmd="hack">hack</button>      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section reveal contact">
+      <h2 class="section-title center"><span class="mono accent">06.</span> Let's talk</h2>
+      <p class="section-sub center">Always happy to chat — reach out on any of these.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:rayandz25@gmail.com">rayandz25@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/rayan-ourdjini" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/rayjini" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://x.com/RayanJini" target="_blank" rel="noopener">X / Twitter</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mono">
+    <p>Built by Rayan Ourdjini</p>
+  </footer>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
