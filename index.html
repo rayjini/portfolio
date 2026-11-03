@@ -20,10 +20,10 @@
   <header class="nav">
     <a href="#top" class="logo">rayan<span class="accent">@</span>ourdjini<span class="blink">_</span></a>
     <nav>
+      <a href="#terminal">terminal</a>
       <a href="#experience">experience</a>
       <a href="#projects">projects</a>
       <a href="#skills">skills</a>
-      <a href="#terminal">terminal</a>
       <a href="#contact">contact</a>
     </nav>
   </header>
@@ -37,9 +37,7 @@
           <h1>Hi, I'm <span class="gradient">Rayan Ourdjini</span>.</h1>
           <p class="typed mono">&gt; <span id="typed"></span><span class="caret">|</span></p>
           <p class="lead">
-            Computer Science (Cybersecurity) student at Carleton University. I automate infrastructure,
-            ship CI/CD pipelines, and hunt down security gaps, most recently at
-            <strong>Shared Services Canada</strong>, <strong>National Defence</strong> and the <strong>CRA</strong>.
+            Cybersecurity student at <strong>Carleton University</strong> who loves building and securing infrastructure.
           </p>
           <div class="cta">
             <a class="btn primary" href="#projects">View my work</a>
@@ -57,9 +55,61 @@
       </ul>
     </section>
 
+    <!-- Terminal -->
+    <section id="terminal" class="section reveal">
+      <h2 class="section-title"><span class="mono accent">01.</span> Play around</h2>
+      <p class="section-sub">A real, working terminal. Type <code>help</code> to see what it can do.</p>
+      <div class="mac" id="mac">
+        <div class="mac-menubar">
+          <span class="mac-logo" aria-hidden="true"></span>
+          <b>Terminal</b>
+          <span class="mi">Shell</span><span class="mi">Edit</span><span class="mi">View</span><span class="mi">Window</span><span class="mi">Help</span>
+          <span class="mac-right"><span class="mi">rayan</span><span id="mac-clock"></span></span>
+        </div>
+        <div class="mac-desktop">
+          <div class="term" id="term">
+            <div class="term-bar">
+              <div class="lights">
+                <button class="tdot r" data-win="close" aria-label="Close window" title="Close">×</button>
+                <button class="tdot y" data-win="min" aria-label="Minimize window" title="Minimize">−</button>
+                <button class="tdot g" data-win="zoom" aria-label="Zoom window" title="Zoom">+</button>
+              </div>
+              <span class="term-title">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.5 3A1.5 1.5 0 0 1 3 1.5h3.4l1.5 1.5H13A1.5 1.5 0 0 1 14.5 4.5v8A1.5 1.5 0 0 1 13 14H3a1.5 1.5 0 0 1-1.5-1.5z"/></svg>
+                guest — -zsh — 80×24
+              </span>
+            </div>
+            <div class="term-body" id="term-body">
+              <div id="term-out"></div>
+              <form id="term-form" class="term-line" autocomplete="off">
+                <label for="term-in" class="prompt">guest@rayans-mbp ~ %</label>
+                <input id="term-in" type="text" spellcheck="false" aria-label="Terminal input">
+              </form>
+            </div>
+          </div>
+          <button class="btn reopen" id="term-reopen">Open Terminal</button>
+        </div>
+        <nav class="mac-dock" aria-label="Dock">
+          <button class="dock-item i-term running" id="dock-term" data-label="Terminal">&gt;_</button>
+          <a class="dock-item i-proj" href="#projects" data-label="Projects">{ }</a>
+          <span class="dock-sep"></span>
+          <a class="dock-item i-mail" href="mailto:rayandz25@gmail.com" data-label="Mail">✉</a>
+          <a class="dock-item i-in" href="https://www.linkedin.com/in/rayan-ourdjini" target="_blank" rel="noopener" data-label="LinkedIn">in</a>
+          <a class="dock-item i-gh" href="https://github.com/rayjini" target="_blank" rel="noopener" data-label="GitHub">gh</a>
+        </nav>
+      </div>
+      <div class="chips" id="quick-cmds">
+        <button data-cmd="whoami">whoami</button>
+        <button data-cmd="ls projects">ls projects</button>
+        <button data-cmd="skills">skills</button>
+        <button data-cmd="neofetch">neofetch</button>
+        <button data-cmd="hack">hack</button>
+      </div>
+    </section>
+
     <!-- Experience -->
     <section id="experience" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">01.</span> Experience</h2>
+      <h2 class="section-title"><span class="mono accent">02.</span> Experience</h2>
       <ol class="timeline">
         <li class="job">
           <div class="job-head">
@@ -67,40 +117,30 @@
             <span class="mono date">Jan 2026 – Aug 2026</span>
           </div>
           <p class="org">Shared Services Canada · Ottawa, ON</p>
-          <ul>
-            <li>Automated deployment and configuration for <b>10+ containerized services</b> with Kubernetes and Ansible, cutting provisioning from <b>2–4 hours to under 15 minutes</b>.</li>
-            <li>Shipped <b>Traefik</b> as reverse proxy and load balancer, enabling zero-downtime deploys and <b>doubling throughput</b> under peak load.</li>
-            <li>Stood up <b>GitLab Runner</b> for shared CI/CD, reducing release cycle time by <b>~70%</b> for 5+ engineers.</li>
-            <li>Containerized production apps with Docker and rolled updates across VMware vSphere, reaching <b>99%+ uptime</b> in a classified environment.</li>
-          </ul>        </li>
+          <p class="job-desc">Automated deployment of containerized services with Kubernetes, Ansible and GitLab CI/CD, cutting provisioning from hours to minutes.</p>
+        </li>
         <li class="job">
           <div class="job-head">
             <h3>Cybersecurity Specialist Intern</h3>
             <span class="mono date">Sep 2024 – Apr 2025</span>
           </div>
           <p class="org">National Defence (DND) · Gatineau, QC</p>
-          <ul>
-            <li>Ran security assessments of <b>3+ naval communication systems</b>, identifying <b>20+ critical configuration gaps</b> and driving remediation end-to-end.</li>
-            <li>Applied the Cybersecurity Risk Management Process (CS RMP) to document risk on classified systems for senior stakeholders.</li>
-            <li>Authored a remediation plan across 3+ platforms, cutting estimated risk exposure by <b>~40%</b>.</li>
-            <li>Supported declassification of sensitive technical documents with 100% compliance.</li>
-          </ul>        </li>
+          <p class="job-desc">Ran security assessments on naval communication systems and led remediation of critical configuration gaps.</p>
+        </li>
         <li class="job">
           <div class="job-head">
             <h3>Software Developer Intern</h3>
             <span class="mono date">Feb 2024 – Apr 2024</span>
           </div>
           <p class="org">Canada Revenue Agency · Ottawa, ON</p>
-          <ul>
-            <li>Built a <b>DHCP traffic monitoring</b> workflow that detected and removed <b>6+ rogue routers</b> across multiple CRA sites.</li>
-            <li>Collaborated on vulnerability remediation across enterprise systems, patching gaps and deploying updated protocols.</li>
-          </ul>        </li>
+          <p class="job-desc">Built a DHCP traffic monitoring workflow that found and removed rogue routers across CRA sites.</p>
+        </li>
       </ol>
     </section>
 
     <!-- Projects -->
     <section id="projects" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">02.</span> Projects</h2>
+      <h2 class="section-title"><span class="mono accent">03.</span> Projects</h2>
       <div class="cards">
         <article class="card tilt">
           <div class="card-top">
@@ -164,7 +204,7 @@
             <span class="card-icon mono">&gt;_</span>
             <a class="card-link" href="https://github.com/rayjini/portfolio" target="_blank" rel="noopener" aria-label="Source code">↗</a>
           </div>
-          <h3>This Portfolio</h3>
+          <h3>Portfolio</h3>
           <p>Hand-written HTML, CSS and JavaScript with no frameworks — an interactive terminal, a mouse-reactive particle network and a few hidden easter eggs. Try <code>sudo</code>.</p>
           <div class="tags"><span>JavaScript</span><span>Canvas</span><span>CSS</span></div>
         </article>
@@ -173,7 +213,7 @@
 
     <!-- Skills -->
     <section id="skills" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">03.</span> Skills</h2>
+      <h2 class="section-title"><span class="mono accent">04.</span> Skills</h2>
       <div class="filters" id="skill-filters">
         <button class="active" data-filter="all">all</button>
         <button data-filter="lang">languages</button>
@@ -187,7 +227,7 @@
 
     <!-- Education & certs -->
     <section id="education" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">04.</span> Education</h2>
+      <h2 class="section-title"><span class="mono accent">05.</span> Education</h2>
       <div class="edu">
         <div class="edu-item">
           <span class="mono date">Expected Dec 2027</span>
@@ -196,31 +236,6 @@
           <p class="muted">Object-Oriented Programming · Operating Systems · Data Structures &amp; Algorithms</p>
         </div>
       </div>
-    </section>
-
-    <!-- Terminal -->
-    <section id="terminal" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">05.</span> Play around</h2>
-      <p class="section-sub">An actual terminal. Type <code>help</code> to see what it can do.</p>
-      <div class="term" id="term">
-        <div class="term-bar">
-          <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
-          <span class="term-title mono">guest@rayan-portfolio: ~</span>
-        </div>
-        <div class="term-body mono" id="term-body">
-          <div id="term-out"></div>
-          <form id="term-form" class="term-line" autocomplete="off">
-            <label for="term-in" class="prompt">guest@rayan:~$</label>
-            <input id="term-in" type="text" spellcheck="false" aria-label="Terminal input">
-          </form>
-        </div>
-      </div>
-      <div class="chips" id="quick-cmds">
-        <button data-cmd="whoami">whoami</button>
-        <button data-cmd="ls projects">ls projects</button>
-        <button data-cmd="skills">skills</button>
-        <button data-cmd="neofetch">neofetch</button>
-        <button data-cmd="hack">hack</button>      </div>
     </section>
 
     <!-- Contact -->

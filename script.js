@@ -40,7 +40,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
       if (p.y < 0 || p.y > h) p.vy *= -1;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(94, 234, 212, 0.55)";
+      ctx.fillStyle = "rgba(230, 199, 156, 0.55)";
       ctx.fill();
     }
     for (let i = 0; i < particles.length; i++) {
@@ -48,7 +48,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
         const a = particles[i], b = particles[j];
         const d = Math.hypot(a.x - b.x, a.y - b.y);
         if (d < 120) {
-          ctx.strokeStyle = `rgba(129, 140, 248, ${0.18 * (1 - d / 120)})`;
+          ctx.strokeStyle = `rgba(196, 170, 232, ${0.18 * (1 - d / 120)})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -60,7 +60,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
       const a = particles[i];
       const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
       if (md < 180) {
-        ctx.strokeStyle = `rgba(94, 234, 212, ${0.35 * (1 - md / 180)})`;
+        ctx.strokeStyle = `rgba(230, 199, 156, ${0.35 * (1 - md / 180)})`;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(mouse.x, mouse.y);
@@ -317,7 +317,7 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
 
   async function exec(raw) {
     const line = raw.trim();
-    print(`<span class="prompt">guest@rayan:~$</span>${esc(raw)}`, "t-cmd");
+    print(`<span class="prompt">guest@rayans-mbp ~ %</span>${esc(raw)}`, "t-cmd");
     if (!line) return;
     history.push(line);
     hIndex = history.length;
@@ -369,10 +369,51 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
     })
   );
 
+  const last = new Date(Date.now() - 1000 * 60 * 47);
+  const fmt = last.toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).replace(/,/g, "");
   print(
-`<span class="t-acc">Welcome to rayan-portfolio v1.0</span>
+`<span class="t-dim">Last login: ${fmt} on ttys001</span>
+<span class="t-acc">Welcome to rayan-portfolio v1.0</span>
 <span class="t-dim">Type</span> <span class="t-acc">help</span> <span class="t-dim">to get started, or click a command below.</span>
 `);
+
+  /* macOS window controls + dock */
+  const mac = document.getElementById("mac");
+  const win = document.getElementById("term");
+  const show = () => {
+    win.classList.remove("closed", "minimized");
+    mac.classList.remove("term-hidden");
+    setTimeout(() => input.focus({ preventScroll: true }), 300);
+  };
+  const hide = (cls) => {
+    win.classList.add(cls);
+    mac.classList.add("term-hidden");
+  };
+  document.querySelectorAll(".tdot[data-win]").forEach((b) =>
+    b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const a = b.dataset.win;
+      if (a === "close") { hide("closed"); out.innerHTML = ""; history.length = 0; hIndex = 0; }
+      else if (a === "min") hide("minimized");
+      else win.classList.toggle("zoomed");
+    })
+  );
+  document.getElementById("dock-term").addEventListener("click", () => {
+    if (win.classList.contains("closed")) print(`<span class="t-dim">Last login: ${new Date().toString().slice(0, 24)} on ttys002</span>`);
+    show();
+  });
+  document.getElementById("term-reopen").addEventListener("click", () => document.getElementById("dock-term").click());
+  document.querySelector(".term-bar").addEventListener("dblclick", (e) => {
+    if (!e.target.closest(".lights")) win.classList.toggle("zoomed");
+  });
+
+  /* menu bar clock */
+  const clock = document.getElementById("mac-clock");
+  const tick = () => {
+    clock.textContent = new Date().toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).replace(/,/g, "");
+  };
+  tick();
+  setInterval(tick, 15000);
 })();
 
 /* ---------- Konami code ---------- */
