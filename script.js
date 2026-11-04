@@ -1,86 +1,98 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- Particle network background ---------- */
+/* ---------- Blue smoke background (WebGL shader) ---------- */
 (() => {
   const canvas = document.getElementById("bg");
-  const ctx = canvas.getContext("2d");
-  const mouse = { x: -9999, y: -9999 };
-  let w, h, dpr, particles = [];
-
-  function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.min(110, Math.floor((w * h) / 14000));
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      r: Math.random() * 1.4 + 0.6,
-    }));
-  }
-
-  function step() {
-    ctx.clearRect(0, 0, w, h);
-    for (const p of particles) {
-      // Gently push particles away from the cursor
-      const dx = p.x - mouse.x, dy = p.y - mouse.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 140 && dist > 0) {
-        p.x += (dx / dist) * 1.2;
-        p.y += (dy / dist) * 1.2;
-      }
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(230, 199, 156, 0.55)";
-      ctx.fill();
-    }
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d < 120) {
-          ctx.strokeStyle = `rgba(196, 170, 232, ${0.18 * (1 - d / 120)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-      // Link nearby particles to the cursor
-      const a = particles[i];
-      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-      if (md < 180) {
-        ctx.strokeStyle = `rgba(230, 199, 156, ${0.35 * (1 - md / 180)})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-      }
-    }
-    if (!reduceMotion) requestAnimationFrame(step);
-  }
-
   const glow = document.querySelector(".cursor-glow");
   window.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
     glow.style.left = e.clientX + "px";
     glow.style.top = e.clientY + "px";
   });
-  window.addEventListener("mouseout", () => { mouse.x = mouse.y = -9999; });
-  window.addEventListener("resize", () => { resize(); if (reduceMotion) step(); });
+
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+  if (!gl) { canvas.classList.add("no-gl"); return; }
+
+  const vert = `attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }`;
+  const frag = `
+    precision highp float;
+    uniform vec2 r;
+    uniform float t;
+    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+    float noise(vec2 p) {
+      vec2 i = floor(p), f = fract(p);
+      vec2 u = f * f * (3.0 - 2.0 * f);
+      return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+                 mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+    }
+    float fbm(vec2 p) {
+      float v = 0.0, a = 0.5;
+      mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+      for (int i = 0; i < 5; i++) { v += a * noise(p); p = m * p; a *= 0.5; }
+      return v;
+    }
+    void main() {
+      vec2 uv = gl_FragCoord.xy / r.y;
+      vec2 p = uv * 1.5;
+      float T = t * 0.045;
+      // Domain warping: noise fed into noise gives flowing, silky smoke
+      vec2 q = vec2(fbm(p + T), fbm(p + vec2(5.2, 1.3) - T));
+      vec2 s = vec2(fbm(p + 3.0 * q + vec2(1.7, 9.2) + T * 1.4),
+                    fbm(p + 3.0 * q + vec2(8.3, 2.8) - T * 0.8));
+      float f = fbm(p + 3.0 * s);
+
+      vec3 col = mix(vec3(0.0), vec3(0.0, 0.05, 0.22), smoothstep(0.25, 0.95, f));
+      col += vec3(0.08, 0.35, 0.95) * pow(smoothstep(0.5, 1.05, f * (0.6 + length(s))), 2.2);
+      col += vec3(0.3, 0.78, 1.0) * pow(smoothstep(0.82, 1.15, f * (0.6 + length(s))), 3.0) * 0.5;
+
+      vec2 c = gl_FragCoord.xy / r - 0.5;
+      col *= 1.0 - dot(c, c) * 1.8;   // vignette
+      col *= 0.8;                      // keep it dark so text stays readable
+      gl_FragColor = vec4(col, 1.0);
+    }`;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.classList.add("no-gl"); return; }
+  gl.useProgram(prog);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(prog, "r");
+  const uTime = gl.getUniformLocation(prog, "t");
+
+  const SCALE = 0.5; // render at half resolution — smoke is soft, saves GPU
+  function resize() {
+    canvas.width = Math.ceil(window.innerWidth * SCALE);
+    canvas.height = Math.ceil(window.innerHeight * SCALE);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+
+  const start = performance.now();
+  let last = 0;
+  function draw(now) {
+    if (now - last > 33) { // ~30fps is plenty for slow smoke
+      last = now;
+      gl.uniform1f(uTime, 20 + (now - start) / 1000);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  window.addEventListener("resize", () => { resize(); if (reduceMotion) draw(1e9); });
   resize();
-  step();
+  requestAnimationFrame(draw);
 })();
 
 /* ---------- Typing effect ---------- */
@@ -220,7 +232,8 @@ Likes: automating boring things, breaking (then fixing) systems, CTFs.`),
     projects: {
       desc: "show my projects",
       run: () => print(
-`<span class="t-acc">insulin-pump-sim/</span>    C++ · Qt — real-time insulin pump simulator      ${link("https://github.com/rayjini/Insulin-Pump-Solution", "repo")}
+`<span class="t-acc">detection-lab/</span>       Sigma · Sysmon — detection-as-code + ATT&amp;CK    ${link("https://github.com/rayjini/detection-engineering-lab", "repo")}
+<span class="t-acc">insulin-pump-sim/</span>    C++ · Qt — real-time insulin pump simulator      ${link("https://github.com/rayjini/Insulin-Pump-Solution", "repo")}
 <span class="t-acc">worldcup-stats/</span>      Python · SQLite — World Cup winners & scorers     ${link("https://github.com/rayjini/FIFA-World-Cup-Winners-Scorers", "repo")}
 <span class="t-acc">curling-game/</span>        JS · Canvas — two-player curling + live chat${link("https://github.com/rayjini/Curling-Game", "repo")}
 <span class="t-acc">itunes-search/</span>       Express — iTunes API song search                 ${link("https://github.com/rayjini/ITunes-API-App", "repo")}
