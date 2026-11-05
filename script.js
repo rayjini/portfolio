@@ -232,7 +232,8 @@ Likes: automating boring things, breaking (then fixing) systems, CTFs.`),
     projects: {
       desc: "show my projects",
       run: () => print(
-`<span class="t-acc">detection-lab/</span>       Sigma · Sysmon — detection-as-code + ATT&amp;CK    ${link("https://github.com/rayjini/detection-engineering-lab", "repo")}
+`<span class="t-acc">gta6-wiki/</span>           Astro — unofficial GTA VI fan wiki               ${link("https://gta-6wiki.com", "site")}
+<span class="t-acc">detection-lab/</span>       Sigma · Sysmon — detection-as-code + ATT&amp;CK    ${link("https://github.com/rayjini/detection-engineering-lab", "repo")}
 <span class="t-acc">insulin-pump-sim/</span>    C++ · Qt — real-time insulin pump simulator      ${link("https://github.com/rayjini/Insulin-Pump-Solution", "repo")}
 <span class="t-acc">worldcup-stats/</span>      Python · SQLite — World Cup winners & scorers     ${link("https://github.com/rayjini/FIFA-World-Cup-Winners-Scorers", "repo")}
 <span class="t-acc">curling-game/</span>        JS · Canvas — two-player curling + live chat${link("https://github.com/rayjini/Curling-Game", "repo")}
