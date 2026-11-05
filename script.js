@@ -40,13 +40,16 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
                     fbm(p + 3.0 * q + vec2(8.3, 2.8) - T * 0.8));
       float f = fbm(p + 3.0 * s);
 
-      vec3 col = mix(vec3(0.0), vec3(0.0, 0.05, 0.22), smoothstep(0.25, 0.95, f));
-      col += vec3(0.08, 0.35, 0.95) * pow(smoothstep(0.5, 1.05, f * (0.6 + length(s))), 2.2);
-      col += vec3(0.3, 0.78, 1.0) * pow(smoothstep(0.82, 1.15, f * (0.6 + length(s))), 3.0) * 0.5;
+      vec3 col = mix(vec3(0.0), vec3(0.01, 0.03, 0.12), smoothstep(0.25, 0.95, f));
+      col += vec3(0.06, 0.22, 0.6) * pow(smoothstep(0.5, 1.05, f * (0.6 + length(s))), 2.2);
+      col += vec3(0.25, 0.55, 0.85) * pow(smoothstep(0.82, 1.15, f * (0.6 + length(s))), 3.0) * 0.35;
+
+      float lum = dot(col, vec3(0.299, 0.587, 0.114));
+      col = mix(vec3(lum), col, 0.7);  // desaturate so the blue doesn't overpower
 
       vec2 c = gl_FragCoord.xy / r - 0.5;
       col *= 1.0 - dot(c, c) * 1.8;   // vignette
-      col *= 0.8;                      // keep it dark so text stays readable
+      col *= 0.65;                     // keep it dark so text stays readable
       gl_FragColor = vec4(col, 1.0);
     }`;
 
