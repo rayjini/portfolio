@@ -158,7 +158,9 @@ Likes: automating boring things, breaking (then fixing) systems, CTFs.`),
     experience: {
       desc: "work history",
       run: () => print(
-`<span class="t-yel">2026</span>  Software Developer Intern      <span class="t-dim">Shared Services Canada</span>
+`<span class="t-yel">2027</span>  Software Developer Intern      <span class="t-dim">Kinaxis</span>
+      ↳ starting Jan 2027 · DevOps: IaC, CI/CD, Terraform, GitOps, ArgoCD
+<span class="t-yel">2026</span>  Software Developer Intern      <span class="t-dim">Shared Services Canada</span>
       ↳ provisioning 2–4h → &lt;15min, release cycles −70%, 99%+ uptime
 <span class="t-yel">2024</span>  Cybersecurity Specialist Intern <span class="t-dim">National Defence</span>
       ↳ 20+ critical gaps found, ~40% risk reduction
@@ -202,7 +204,7 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
 <span class="t-acc">   / __ \\ </span>   ---------------------
 <span class="t-acc">  / /_/ / </span>   <span class="t-acc">OS</span>:      Carleton CS / Cybersecurity
 <span class="t-acc"> / _, _/  </span>   <span class="t-acc">Host</span>:    Ottawa, ON
-<span class="t-acc">/_/ |_|   </span>   <span class="t-acc">Uptime</span>:  5 internships
+<span class="t-acc">/_/ |_|   </span>   <span class="t-acc">Uptime</span>:  5+ internships
              <span class="t-acc">Shell</span>:   bash, PowerShell
              <span class="t-acc">Stack</span>:   K8s · Docker · Ansible · Python · C++
              <span class="t-acc">Editor</span>:  VS Code + Claude Code
