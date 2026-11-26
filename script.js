@@ -9,13 +9,82 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
   });
 })();
 
+/* ---------- Broadcast scoreboard ---------- */
+(() => {
+  const bug = document.getElementById("scorebug");
+  if (!bug) return;
+  const home = document.getElementById("sb-home"), away = document.getElementById("sb-away");
+  const clock = document.getElementById("sb-clock");
+  const MATCH = 180; // real seconds for a full 90 minutes
+  let start = performance.now(), goals = 0, conceded = 0, lastMin = -1;
+  const pad = (n) => String(n).padStart(2, "0");
+  const tick = () => {
+    const secs = ((performance.now() - start) / 1000) * (5400 / MATCH);
+    if (secs >= 5400) { // full time: show FT, then kick off again
+      clock.textContent = "FT";
+      if (secs >= 5400 + 4 * (5400 / MATCH)) { start = performance.now(); goals = conceded = 0; home.textContent = away.textContent = "0"; }
+    } else {
+      const m = Math.floor(secs / 60);
+      clock.textContent = `${pad(m)}:${pad(Math.floor(secs % 60))}`;
+      // the bugs sneak one in now and then
+      if (m !== lastMin) { lastMin = m; if (m > 0 && Math.random() < 0.012) away.textContent = ++conceded; }
+    }
+  };
+  if (reduceMotion) { clock.textContent = "KO"; return; }
+  setInterval(tick, 250);
+  window.addEventListener("pitch:goal", () => {
+    if (clock.textContent === "FT") return;
+    home.textContent = ++goals;
+    bug.classList.remove("goal"); void bug.offsetWidth; bug.classList.add("goal");
+    clearTimeout(bug._t); bug._t = setTimeout(() => bug.classList.remove("goal"), 2200);
+  });
+})();
+
+/* ---------- Menu tabs: LB/RB bumpers, Q/E keys, active tab ---------- */
+(() => {
+  const nav = document.getElementById("tabs");
+  if (!nav) return;
+  const tabs = [...nav.querySelectorAll("a[href^='#']")];
+  const sections = tabs.map((a) => document.querySelector(a.getAttribute("href")));
+  let current = -1;
+  const setActive = (i) => { current = i; tabs.forEach((t, j) => t.classList.toggle("active", j === i)); };
+
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) setActive(sections.indexOf(e.target));
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  sections.forEach((s) => s && spy.observe(s));
+  window.addEventListener("scroll", () => { if (window.scrollY < 200) setActive(-1); }, { passive: true });
+
+  const go = (i) => {
+    if (i < 0) { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); setActive(-1); return; }
+    const s = sections[i];
+    s.classList.add("visible");
+    s.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    setActive(i);
+    if (!reduceMotion) { s.classList.remove("swipe"); void s.offsetWidth; s.classList.add("swipe"); }
+  };
+  const step = (dir) => go(Math.max(-1, Math.min(tabs.length - 1, current + dir)));
+
+  nav.querySelectorAll(".bumper").forEach((b) => b.addEventListener("click", () => step(+b.dataset.dir)));
+  window.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.target.closest("input, textarea, [contenteditable]") || document.querySelector("dialog[open]")) return;
+    const k = e.key.toLowerCase();
+    const dir = k === "q" ? -1 : k === "e" ? 1 : 0;
+    if (dir) {
+      step(dir);
+      const b = nav.querySelector(`.bumper[data-dir="${dir}"]`);
+      b.classList.add("press"); setTimeout(() => b.classList.remove("press"), 150);
+    } else if (e.key === "Escape") go(-1);
+  });
+})();
+
 /* ---------- Typing effect ---------- */
 (() => {
   const el = document.getElementById("typed");
   const phrases = [
+    "Carleton University Student",
     "Software Developer",
     "DevOps & Infrastructure Automation",
-    "Computer Science Student",
     "Kubernetes · Docker · Ansible",
   ];
   if (reduceMotion) { el.textContent = phrases[0]; return; }
@@ -74,21 +143,25 @@ document.querySelectorAll(".tilt").forEach((card) => {
 });
 
 /* ---------- Skills ---------- */
+// [name, category, rating out of 99]
 const SKILLS = [
-  ["Java", "lang"], ["C", "lang"], ["C++", "lang"], ["Python", "lang"], ["JavaScript", "lang"],
-  ["TypeScript", "lang"], ["SQL", "lang"], ["HTML / CSS", "lang"],
-  ["Docker", "infra"], ["Kubernetes", "infra"], ["Ansible", "infra"], ["Traefik", "infra"],
-  ["VMware vSphere", "infra"], ["GitLab CI/CD", "infra"], ["AWS", "infra"], ["Nlyte DCIM", "infra"],
-  ["Git", "infra"], ["Linux (Ubuntu, Kali)", "infra"],
-  ["Wireshark", "sec"], ["Risk Management (CS RMP)", "sec"], ["Security Assessment", "sec"],
-  ["SANS SEC566", "sec"], ["Network Forensics", "sec"], ["Cryptography", "sec"],
-  ["React.js", "web"], ["Angular", "web"], ["Node.js", "web"], ["Qt", "web"],
-  ["PostgreSQL", "data"], ["MySQL", "data"], ["SQLite", "data"], ["scikit-learn", "data"],
-  ["Claude Code", "data"], ["Cursor", "data"],
+  ["Java", "lang", 85], ["C", "lang", 82], ["C++", "lang", 84], ["Python", "lang", 88], ["JavaScript", "lang", 84],
+  ["TypeScript", "lang", 80], ["SQL", "lang", 83], ["HTML / CSS", "lang", 86],
+  ["Docker", "infra", 90], ["Kubernetes", "infra", 88], ["Ansible", "infra", 87], ["Traefik", "infra", 80],
+  ["VMware vSphere", "infra", 80], ["GitLab CI/CD", "infra", 88], ["AWS", "infra", 80], ["Nlyte DCIM", "infra", 79],
+  ["Git", "infra", 90], ["Linux (Ubuntu, Kali)", "infra", 87],
+  ["Wireshark", "sec", 85], ["Risk Management (CS RMP)", "sec", 80], ["Security Assessment", "sec", 84],
+  ["SANS SEC566", "sec", 80], ["Network Forensics", "sec", 80], ["Cryptography", "sec", 80],
+  ["React.js", "web", 80], ["Angular", "web", 79], ["Node.js", "web", 80], ["Qt", "web", 80],
+  ["PostgreSQL", "data", 80], ["MySQL", "data", 80], ["SQLite", "data", 80], ["scikit-learn", "data", 79],
+  ["Claude Code", "data", 92], ["Cursor", "data", 85],
 ];
 (() => {
   const grid = document.getElementById("skill-grid");
-  grid.innerHTML = SKILLS.map(([name, cat]) => `<div class="skill" data-cat="${cat}">${name}</div>`).join("");
+  const tier = (r) => (r >= 85 ? "t1" : r >= 78 ? "t2" : r >= 70 ? "t3" : "t4");
+  grid.innerHTML = SKILLS.map(([name, cat, r]) =>
+    `<div class="skill ${tier(r)}" data-cat="${cat}" title="${name}: ${r}"><span class="rt">${r}</span><span class="nm">${name}</span><span class="bar"><i style="--v:${r}%"></i></span></div>`
+  ).join("");
   const buttons = document.querySelectorAll("#skill-filters button");
   buttons.forEach((btn) => btn.addEventListener("click", () => {
     buttons.forEach((b) => b.classList.toggle("active", b === btn));
@@ -225,6 +298,31 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
         for (const [line, cls] of steps) { print(line, cls); await sleep(380); }
       },
     },
+    goal: {
+      desc: "score one for the home side",
+      run: async () => {
+        const lines = [
+          ["Ourdjini picks it up on the edge of the box...", "t-dim"],
+          ["cuts inside... shoots...", "t-dim"],
+          ["GOOOOOOAAAAAL! ⚽", "t-yel"],
+        ];
+        for (const [line, cls] of lines) { print(line, cls); await sleep(550); }
+        window.dispatchEvent(new Event("pitch:goal"));
+      },
+    },
+    formation: {
+      desc: "my starting XI (4-3-3)",
+      run: () => print(
+`<span class="t-dim">            ─── RAYAN FC · 4-3-3 ───</span>
+
+   <span class="t-yel">Kubernetes</span>        <span class="t-yel">Docker</span>         <span class="t-yel">Ansible</span>
+
+        <span class="t-acc">Python</span>         <span class="t-acc">C++</span>          <span class="t-acc">Java</span>
+
+  <span class="t-ok">Wireshark</span>     <span class="t-ok">Linux</span>       <span class="t-ok">Git</span>      <span class="t-ok">GitLab CI</span>
+
+                    <span class="t-pur">Rayan</span> <span class="t-dim">(GK, C)</span>`),
+    },
     sudo: {
       desc: "",
       hidden: true,
@@ -358,4 +456,138 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
       document.body.classList.toggle("party");
     }
   });
+})();
+
+/* ---------- News ticker: repeat items so the loop is seamless ---------- */
+(() => {
+  const run = document.querySelector(".ticker-run");
+  if (run) run.innerHTML += run.innerHTML.replace(/<span>/g, "<span aria-hidden=\"true\">");
+})();
+
+/* ---------- Tactics board: top skills as a 4-3-3 ---------- */
+(() => {
+  const squad = document.getElementById("tb-squad");
+  if (!squad) return;
+  const rating = Object.fromEntries(SKILLS.map(([n, , r]) => [n, r]));
+  // [skill, x %, y %] attacking left to right
+  const XI = [
+    ["Linux (Ubuntu, Kali)", 7, 50, "Linux", "gk"],
+    ["Git", 24, 15], ["GitLab CI/CD", 21, 38], ["Ansible", 21, 62], ["Wireshark", 24, 85],
+    ["Python", 46, 25], ["Docker", 42, 50], ["Java", 46, 75],
+    ["Kubernetes", 72, 18], ["Claude Code", 82, 50], ["HTML / CSS", 72, 82],
+  ];
+  squad.innerHTML = XI.map(([skill, x, y, label, cls]) =>
+    `<div class="mag ${cls || ""}" style="left:${x}%;top:${y}%" title="${skill}: ${rating[skill]}">` +
+    `<b>${rating[skill]}</b><span>${label || skill}</span></div>`
+  ).join("");
+})();
+
+/* ---------- Dressing room: hotspots open the matching section in a panel ---------- */
+(() => {
+  const scene = document.getElementById("scene");
+  const panel = document.getElementById("panel");
+  if (!scene || !panel) return;
+  const body = document.getElementById("panel-body");
+  const title = document.getElementById("panel-title");
+  const kicker = document.getElementById("panel-kicker");
+  const tip = document.getElementById("scene-tip");
+  const svg = document.getElementById("scene-svg");
+
+  const PANELS = {
+    profile: { kicker: "My locker", title: "Player profile", nodes: ["#profile", "#experience"] },
+    skills: { kicker: "Tactics board", title: "Skills", nodes: ["#skills"] },
+    projects: { kicker: "Trophy cabinet", title: "Projects", nodes: ["#projects"] },
+    terminal: { kicker: "Laptop", title: "Terminal", nodes: ["#terminal"] },
+    education: { kicker: "Diploma", title: "Education", nodes: ["#education"] },
+    contact: { kicker: "Club crest", title: "Contact", nodes: ["#contact"] },
+  };
+  const ORDER = Object.keys(PANELS);
+
+  // sections are borrowed into the panel and put back where they were on close
+  let borrowed = [];
+  const putBack = () => {
+    for (const [node, marker] of borrowed) { marker.replaceWith(node); }
+    borrowed = [];
+  };
+  const open = (key) => {
+    const cfg = PANELS[key];
+    if (!cfg) return;
+    putBack();
+    kicker.textContent = cfg.kicker;
+    title.textContent = cfg.title;
+    for (const sel of cfg.nodes) {
+      const node = document.querySelector(sel);
+      if (!node) continue;
+      const marker = document.createComment("panel:" + sel);
+      node.replaceWith(marker);
+      node.classList.add("visible");
+      body.appendChild(node);
+      borrowed.push([node, marker]);
+    }
+    panel.dataset.key = key;
+    body.scrollTop = 0;
+    if (!panel.open) panel.showModal();
+    if (key === "terminal") setTimeout(() => document.getElementById("term-in")?.focus({ preventScroll: true }), 350);
+  };
+  panel.addEventListener("close", putBack);
+  document.getElementById("panel-close").addEventListener("click", () => panel.close());
+  panel.addEventListener("click", (e) => { if (e.target === panel) panel.close(); }); // click the backdrop
+  // inside a panel, links to other sections switch panels instead of scrolling the page behind
+  panel.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href^='#']");
+    if (!a) return;
+    const id = a.getAttribute("href").slice(1);
+    const key = ORDER.find((k) => PANELS[k].nodes.includes("#" + id));
+    if (key && key !== panel.dataset.key) { e.preventDefault(); open(key); }
+  });
+
+  // hotspots + menu buttons
+  scene.querySelectorAll("[data-open]").forEach((el) => {
+    el.addEventListener("click", () => open(el.dataset.open));
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(el.dataset.open); } });
+  });
+  // number keys 1-6 open panels while the room is on screen
+  window.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.target.closest("input, textarea, [contenteditable]")) return;
+    const i = "123456".indexOf(e.key);
+    if (i >= 0 && scene.getBoundingClientRect().bottom > 0) open(ORDER[i]);
+  });
+
+  // floating label over the hovered hotspot
+  const showTip = (el) => {
+    const cfg = PANELS[el.dataset.open];
+    const r = el.getBoundingClientRect(), s = scene.getBoundingClientRect();
+    tip.innerHTML = `<b>${cfg.kicker}</b><span>${cfg.title}</span>`;
+    tip.style.left = `${r.left - s.left + r.width / 2}px`;
+    tip.style.top = `${Math.max(8, r.top - s.top - 10)}px`;
+    tip.classList.add("on");
+    scene.querySelectorAll(".scene-menu [data-open]").forEach((b) => b.classList.toggle("hl", b.dataset.open === el.dataset.open));
+  };
+  const hideTip = () => { tip.classList.remove("on"); scene.querySelectorAll(".scene-menu .hl").forEach((b) => b.classList.remove("hl")); };
+  svg.querySelectorAll(".hot").forEach((el) => {
+    el.addEventListener("mouseenter", () => showTip(el));
+    el.addEventListener("focus", () => showTip(el));
+    el.addEventListener("mouseleave", hideTip);
+    el.addEventListener("blur", hideTip);
+  });
+  scene.querySelectorAll(".scene-menu [data-open]").forEach((b) => {
+    const hot = svg.querySelector(`.hot[data-open="${b.dataset.open}"]`);
+    b.addEventListener("mouseenter", () => hot.classList.add("lit"));
+    b.addEventListener("mouseleave", () => hot.classList.remove("lit"));
+  });
+
+  // portrait screens: show the whole room instead of cropping the sides away
+  const fit = () => svg.setAttribute("preserveAspectRatio", window.innerHeight > window.innerWidth ? "xMidYMid meet" : "xMidYMid slice");
+  fit();
+  window.addEventListener("resize", fit);
+
+  // lights flicker on as the room appears
+  if (!reduceMotion) scene.classList.add("lights-on");
+})();
+
+/* ---------- The scoreboard ticks over: Rayan FC nicks a goal every so often ---------- */
+(() => {
+  if (reduceMotion) return;
+  const kick = () => setTimeout(() => { window.dispatchEvent(new Event("pitch:goal")); kick(); }, 30000 + Math.random() * 25000);
+  kick();
 })();

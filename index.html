@@ -9,42 +9,355 @@
   <meta property="og:description" content="Software developer, DevOps and cybersecurity. Kubernetes, Docker, Ansible, CI/CD, security assessments.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b0d12'/><text x='50' y='66' font-family='monospace' font-size='52' font-weight='700' text-anchor='middle' fill='%235eead4'>R_</text></svg>">
 </head>
 <body>
-  <canvas id="bg" aria-hidden="true"></canvas>
   <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="scorebug" id="scorebug" aria-hidden="true">
+    <span class="sb-team home">RAY</span>
+    <span class="sb-score"><b id="sb-home">0</b><i>–</i><b id="sb-away">0</b></span>
+    <span class="sb-team away">BUG</span>
+    <span class="sb-clock mono" id="sb-clock">00:00</span>
+    <span class="sb-goal" id="sb-goal">GOAL!</span>
+  </div>
 
   <header class="nav">
     <a href="#top" class="logo">rayan<span class="accent">@</span>ourdjini<span class="blink">_</span></a>
-    <nav>
-      <a href="#terminal">terminal</a>
-      <a href="#experience">experience</a>
-      <a href="#projects">projects</a>
-      <a href="#skills">skills</a>
-      <a href="#contact">contact</a>
+    <nav id="tabs" aria-label="Sections">
+      <button class="bumper" data-dir="-1" aria-label="Previous section" title="Previous (Q)">LB</button>
+      <a href="#terminal">Terminal</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <button class="bumper" data-dir="1" aria-label="Next section" title="Next (E)">RB</button>
     </nav>
   </header>
 
   <main id="top">
+
+    <!-- Dressing room: the landing scene. Everything that glows opens a panel. -->
+    <section class="scene" id="scene" aria-label="Dressing room">
+      <svg class="scene-svg" id="scene-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title">
+        <title id="scene-title">Rayan FC dressing room: lockers, a tactics board, a trophy cabinet, a laptop, a diploma and the club crest</title>
+        <defs>
+          <linearGradient id="g-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#090e24"/><stop offset="1" stop-color="#141c42"/></linearGradient>
+          <pattern id="p-slats" width="42" height="10" patternUnits="userSpaceOnUse"><rect x="40" width="2" height="10" fill="#000" opacity="0.28"/><rect width="1" height="10" fill="#fff" opacity="0.03"/></pattern>
+          <linearGradient id="g-wood" x1="0" x2="1"><stop offset="0" stop-color="#25170d"/><stop offset="0.5" stop-color="#3d2717"/><stop offset="1" stop-color="#21140b"/></linearGradient>
+          <linearGradient id="g-cubby" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2348"/><stop offset="1" stop-color="#05070f"/></linearGradient>
+          <linearGradient id="g-cubby-me" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d3112"/><stop offset="1" stop-color="#08070a"/></linearGradient>
+          <linearGradient id="g-pool" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffecc8" stop-opacity="0.22"/><stop offset="1" stop-color="#ffecc8" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g-pool-me" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd27a" stop-opacity="0.45"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g-shirt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d42a0"/><stop offset="0.55" stop-color="#1b2a6b"/><stop offset="1" stop-color="#101a45"/></linearGradient>
+          <linearGradient id="g-shirt-me" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe7a0"/><stop offset="0.5" stop-color="#eab83c"/><stop offset="1" stop-color="#a8781a"/></linearGradient>
+          <linearGradient id="g-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c4"/><stop offset="0.45" stop-color="#f5c542"/><stop offset="1" stop-color="#a8781a"/></linearGradient>
+          <linearGradient id="g-silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#c3cad8"/><stop offset="1" stop-color="#7d8596"/></linearGradient>
+          <linearGradient id="g-alu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d9e3"/><stop offset="0.5" stop-color="#8a92a3"/><stop offset="1" stop-color="#b9c0cc"/></linearGradient>
+          <radialGradient id="g-board" cx="0.5" cy="0.45" r="0.75"><stop offset="0" stop-color="#226238"/><stop offset="1" stop-color="#11381f"/></radialGradient>
+          <linearGradient id="g-bench" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34449a"/><stop offset="1" stop-color="#16205a"/></linearGradient>
+          <radialGradient id="g-floor" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="#16205a"/><stop offset="1" stop-color="#04061a"/></radialGradient>
+          <linearGradient id="g-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4dc" stop-opacity="0.16"/><stop offset="1" stop-color="#fff4dc" stop-opacity="0"/></linearGradient>
+          <radialGradient id="g-vignette" cx="0.5" cy="0.45" r="0.75"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#01020a" stop-opacity="0.75"/></radialGradient>
+          <linearGradient id="g-screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a2b6b"/><stop offset="1" stop-color="#070b1f"/></linearGradient>
+          <path id="shirt" d="M-20 0 Q0 11 20 0 L50 8 L74 40 L59 53 L48 43 L48 126 L-48 126 L-48 43 L-59 53 L-74 40 L-50 8 Z"/>
+          <linearGradient id="g-kit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff27a"/><stop offset="0.5" stop-color="#fde100"/><stop offset="1" stop-color="#d4b000"/></linearGradient>
+          <linearGradient id="m-gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7a5410"/><stop offset="0.22" stop-color="#e8b53a"/><stop offset="0.34" stop-color="#fff3c0"/><stop offset="0.5" stop-color="#e2aa2c"/><stop offset="0.78" stop-color="#8f6213"/><stop offset="1" stop-color="#c8922a"/></linearGradient>
+          <linearGradient id="m-silver" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6474"/><stop offset="0.2" stop-color="#c9cfdb"/><stop offset="0.33" stop-color="#ffffff"/><stop offset="0.52" stop-color="#bcc3d0"/><stop offset="0.8" stop-color="#6a7182"/><stop offset="1" stop-color="#9aa2b2"/></linearGradient>
+          <linearGradient id="m-mal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#083a24"/><stop offset="0.35" stop-color="#2fae70"/><stop offset="0.6" stop-color="#14714a"/><stop offset="1" stop-color="#062e1c"/></linearGradient>
+          <radialGradient id="m-globe" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#fff6cf"/><stop offset="0.35" stop-color="#eab83c"/><stop offset="0.8" stop-color="#9a6a14"/><stop offset="1" stop-color="#6e4a0c"/></radialGradient>
+          <g id="kit-trim">
+            <path d="M-21 0 Q0 12.5 21 0" fill="none" stroke="#111" stroke-width="5.5" stroke-linecap="round"/>
+            <path d="M-50 8 L-21 0 M21 0 L50 8" fill="none" stroke="#111" stroke-width="2.5"/>
+            <path d="M74 40 L59 53 M-74 40 L-59 53" fill="none" stroke="#111" stroke-width="7"/>
+            <path d="M44 52 V126 M-44 52 V126" fill="none" stroke="#111" stroke-width="3.5"/>
+            <path d="M-48 121 H48" fill="none" stroke="#111" stroke-width="2"/>
+          </g>
+          <g id="kit-trim-away">
+            <path d="M-21 0 Q0 12.5 21 0" fill="none" stroke="#fde100" stroke-width="5.5" stroke-linecap="round"/>
+            <path d="M-50 8 L-21 0 M21 0 L50 8" fill="none" stroke="#fde100" stroke-width="2.5"/>
+            <path d="M74 40 L59 53 M-74 40 L-59 53" fill="none" stroke="#fde100" stroke-width="7"/>
+            <path d="M44 52 V126 M-44 52 V126" fill="none" stroke="#fde100" stroke-width="3.5"/>
+            <path d="M-48 121 H48" fill="none" stroke="#fde100" stroke-width="2"/>
+          </g>
+          <linearGradient id="g-kit-away" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3a3a"/><stop offset="0.5" stop-color="#1a1a1a"/><stop offset="1" stop-color="#050505"/></linearGradient>
+          <marker id="sc-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#ffeca0"/></marker>
+        </defs>
+
+        <!-- wall, ceiling and lights -->
+        <rect width="1600" height="700" fill="url(#g-wall)"/>
+        <rect width="1600" height="700" fill="url(#p-slats)"/>
+        <rect width="1600" height="48" fill="#04060f"/>
+        <rect y="47" width="1600" height="3" class="sc-ceiling-led"/>
+        <g class="sc-beams">
+          <polygon points="204,50 256,50 400,700 60,700" fill="url(#g-beam)"/><polygon points="494,50 546,50 690,700 350,700" fill="url(#g-beam)"/><polygon points="774,50 826,50 970,700 630,700" fill="url(#g-beam)"/><polygon points="1054,50 1106,50 1250,700 910,700" fill="url(#g-beam)"/><polygon points="1364,50 1416,50 1560,700 1220,700" fill="url(#g-beam)"/>
+        </g>
+        <text x="800" y="122" class="sc-club">RAYAN FC</text>
+        <text x="800" y="152" class="sc-sub">DRESSING ROOM · CLICK ANYTHING THAT GLOWS</text>
+
+        <!-- floor -->
+        <rect y="680" width="1600" height="220" fill="url(#g-floor)"/>
+        <rect y="680" width="1600" height="3" fill="#000" opacity="0.5"/>
+
+        <!-- teammates' lockers -->
+        <g class="sc-locker">
+      <rect x="393" y="172" width="166" height="426" fill="url(#g-wood)"/>
+      <rect x="416" y="178" width="120" height="22" rx="3" fill="#e9edf5"/>
+      <text x="476" y="194.5" class="sc-plate">7  PYTHON</text>
+      <rect x="401" y="205" width="150" height="385" fill="url(#g-cubby)"/>
+      <rect x="411" y="207" width="130" height="3" rx="1.5" class="sc-led"/>
+      <rect x="401" y="209" width="150" height="280" fill="url(#g-pool)" class="sc-pool"/>
+      <path d="M476 226 v10 M446 246 L476 236 L506 246" class="sc-hanger"/>
+      <g transform="translate(476 242) scale(0.92)">
+        <use href="#shirt" fill="url(#g-kit-away)" class="sc-shirt away"/><use href="#kit-trim-away"/>
+        <text y="36" class="sc-shirt-name">PYTHON</text>
+        <text y="98" class="sc-shirt-num">7</text>
+      </g>
+      <rect x="401" y="514" width="150" height="6" fill="#2a1a10"/>
+      <path d="M431 514 a16 9 0 0 1 32 0 z M467 514 a16 9 0 0 1 32 0 z" fill="#dfe4ee"/>
+      <rect x="423" y="540" width="106" height="44" rx="10" fill="#111833"/>
+      <rect x="423" y="556" width="106" height="5" fill="#3550c8" opacity="0.8"/></g><g class="sc-locker">
+      <rect x="555" y="172" width="166" height="426" fill="url(#g-wood)"/>
+      <rect x="578" y="178" width="120" height="22" rx="3" fill="#e9edf5"/>
+      <text x="638" y="194.5" class="sc-plate">9  DOCKER</text>
+      <rect x="563" y="205" width="150" height="385" fill="url(#g-cubby)"/>
+      <rect x="573" y="207" width="130" height="3" rx="1.5" class="sc-led"/>
+      <rect x="563" y="209" width="150" height="280" fill="url(#g-pool)" class="sc-pool"/>
+      <path d="M638 226 v10 M608 246 L638 236 L668 246" class="sc-hanger"/>
+      <g transform="translate(638 242) scale(0.92)">
+        <use href="#shirt" fill="url(#g-kit-away)" class="sc-shirt away"/><use href="#kit-trim-away"/>
+        <text y="36" class="sc-shirt-name">DOCKER</text>
+        <text y="98" class="sc-shirt-num">9</text>
+      </g>
+      <rect x="563" y="514" width="150" height="6" fill="#2a1a10"/>
+      <path d="M593 514 a16 9 0 0 1 32 0 z M629 514 a16 9 0 0 1 32 0 z" fill="#dfe4ee"/>
+      <rect x="585" y="540" width="106" height="44" rx="10" fill="#111833"/>
+      <rect x="585" y="556" width="106" height="5" fill="#3550c8" opacity="0.8"/></g><g class="sc-locker">
+      <rect x="879" y="172" width="166" height="426" fill="url(#g-wood)"/>
+      <rect x="902" y="178" width="120" height="22" rx="3" fill="#e9edf5"/>
+      <text x="962" y="194.5" class="sc-plate">10  KUBERNETES</text>
+      <rect x="887" y="205" width="150" height="385" fill="url(#g-cubby)"/>
+      <rect x="897" y="207" width="130" height="3" rx="1.5" class="sc-led"/>
+      <rect x="887" y="209" width="150" height="280" fill="url(#g-pool)" class="sc-pool"/>
+      <path d="M962 226 v10 M932 246 L962 236 L992 246" class="sc-hanger"/>
+      <g transform="translate(962 242) scale(0.92)">
+        <use href="#shirt" fill="url(#g-kit-away)" class="sc-shirt away"/><use href="#kit-trim-away"/>
+        <text y="36" class="sc-shirt-name">KUBERNETES</text>
+        <text y="98" class="sc-shirt-num">10</text>
+      </g>
+      <rect x="887" y="514" width="150" height="6" fill="#2a1a10"/>
+      <path d="M917 514 a16 9 0 0 1 32 0 z M953 514 a16 9 0 0 1 32 0 z" fill="#dfe4ee"/>
+      <rect x="909" y="540" width="106" height="44" rx="10" fill="#111833"/>
+      <rect x="909" y="556" width="106" height="5" fill="#3550c8" opacity="0.8"/></g><g class="sc-locker">
+      <rect x="1041" y="172" width="166" height="426" fill="url(#g-wood)"/>
+      <rect x="1064" y="178" width="120" height="22" rx="3" fill="#e9edf5"/>
+      <text x="1124" y="194.5" class="sc-plate">8  ANSIBLE</text>
+      <rect x="1049" y="205" width="150" height="385" fill="url(#g-cubby)"/>
+      <rect x="1059" y="207" width="130" height="3" rx="1.5" class="sc-led"/>
+      <rect x="1049" y="209" width="150" height="280" fill="url(#g-pool)" class="sc-pool"/>
+      <path d="M1124 226 v10 M1094 246 L1124 236 L1154 246" class="sc-hanger"/>
+      <g transform="translate(1124 242) scale(0.92)">
+        <use href="#shirt" fill="url(#g-kit-away)" class="sc-shirt away"/><use href="#kit-trim-away"/>
+        <text y="36" class="sc-shirt-name">ANSIBLE</text>
+        <text y="98" class="sc-shirt-num">8</text>
+      </g>
+      <rect x="1049" y="514" width="150" height="6" fill="#2a1a10"/>
+      <path d="M1079 514 a16 9 0 0 1 32 0 z M1115 514 a16 9 0 0 1 32 0 z" fill="#dfe4ee"/>
+      <rect x="1071" y="540" width="106" height="44" rx="10" fill="#111833"/>
+      <rect x="1071" y="556" width="106" height="5" fill="#3550c8" opacity="0.8"/></g>
+
+        <!-- bench -->
+        <rect x="361" y="612" width="878" height="24" rx="6" fill="url(#g-bench)"/>
+        <rect x="361" y="636" width="878" height="44" fill="#0c1232"/>
+        <rect x="361" y="636" width="878" height="2" fill="#f5c542" opacity="0.6"/>
+        <rect x="431" y="646" width="90" height="20" rx="3" fill="#1c2550" />
+      <text x="476" y="660.5" class="sc-seat">PYTHON</text>
+        <rect x="593" y="646" width="90" height="20" rx="3" fill="#1c2550" />
+      <text x="638" y="660.5" class="sc-seat">DOCKER</text>
+        <rect x="917" y="646" width="90" height="20" rx="3" fill="#1c2550" />
+      <text x="962" y="660.5" class="sc-seat">KUBERNETES</text>
+        <rect x="1079" y="646" width="90" height="20" rx="3" fill="#1c2550" />
+      <text x="1124" y="660.5" class="sc-seat">ANSIBLE</text>
+
+        <!-- HOTSPOT: Rayan's locker + seat -> profile & experience -->
+        <g class="hot" data-open="profile" tabindex="0" role="button" aria-label="My locker: player profile and experience">
+          
+      <rect x="717" y="172" width="166" height="426" fill="url(#g-wood)"/>
+      <rect x="740" y="178" width="120" height="22" rx="3" fill="url(#g-gold)"/>
+      <text x="800" y="194.5" class="sc-plate">26  OURDJINI</text>
+      <rect x="725" y="205" width="150" height="385" fill="url(#g-cubby-me)"/>
+      <rect x="735" y="207" width="130" height="3" rx="1.5" class="sc-led me"/>
+      <rect x="725" y="209" width="150" height="280" fill="url(#g-pool-me)" class="sc-pool"/>
+      <path d="M800 226 v10 M770 246 L800 236 L830 246" class="sc-hanger"/>
+      <g transform="translate(800 242) scale(0.92)">
+        <use href="#shirt" fill="url(#g-kit)" class="sc-shirt me"/><use href="#kit-trim"/>
+        <text y="36" class="sc-shirt-name me">OURDJINI</text>
+        <text y="98" class="sc-shirt-num me">26</text>
+      </g>
+      <rect x="725" y="514" width="150" height="6" fill="#2a1a10"/>
+      <path d="M755 514 a16 9 0 0 1 32 0 z M791 514 a16 9 0 0 1 32 0 z" fill="#f5c542"/>
+      <rect x="747" y="540" width="106" height="44" rx="10" fill="#2a2208"/>
+      <rect x="747" y="556" width="106" height="5" fill="#f5c542" opacity="0.8"/>
+          <rect x="755" y="646" width="90" height="20" rx="3" fill="url(#g-gold)" class="sc-seat-me"/>
+      <text x="800" y="660.5" class="sc-seat me">OURDJINI 26</text>
+          <circle class="ping" cx="800" cy="238" r="9"/>
+        </g>
+
+        <!-- HOTSPOT: tactics board -> skills -->
+        <g class="hot" data-open="skills" tabindex="0" role="button" aria-label="Tactics board: skills">
+          <rect x="118" y="186" width="184" height="24" rx="3" fill="#0b1238"/>
+          <text x="210" y="203.5" class="sc-label">TACTICS · 4-3-3</text>
+          <rect x="60" y="215" width="300" height="212" rx="6" fill="url(#g-alu)"/>
+          <rect x="72" y="227" width="276" height="188" rx="2" fill="url(#g-board)"/>
+          <g class="sc-chalk">
+            <rect x="80" y="235" width="260" height="170"/>
+            <line x1="210" y1="235" x2="210" y2="405"/>
+            <circle cx="210" cy="320" r="22"/>
+            <rect x="80" y="286" width="40" height="68"/><rect x="300" y="286" width="40" height="68"/>
+          </g>
+          <g class="sc-arrows">
+            <path d="M190 320 Q 225 290 262 268" marker-end="url(#sc-arrow)"/>
+            <path d="M190 320 Q 230 355 262 372" marker-end="url(#sc-arrow)"/>
+            <path d="M233 320 L 283 320" marker-end="url(#sc-arrow)"/>
+          </g>
+          <circle cx="98.2" cy="320.0" r="7" fill="#eef2ff" stroke="#0b1238" stroke-width="1.5"/><circle cx="142.4" cy="260.5" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="134.6" cy="299.6" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="134.6" cy="340.4" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="142.4" cy="379.5" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="199.6" cy="277.5" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="189.2" cy="320.0" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="199.6" cy="362.5" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="267.2" cy="265.6" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="293.2" cy="320.0" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/><circle cx="267.2" cy="374.4" r="7" fill="url(#g-gold)" stroke="#0b1238" stroke-width="1.5"/>
+          <rect x="92" y="427" width="236" height="9" rx="2" fill="url(#g-alu)"/>
+          <rect x="120" y="422" width="34" height="5" rx="2" fill="#e8463c"/><rect x="164" y="422" width="34" height="5" rx="2" fill="#3b6cf0"/>
+          <circle class="ping" cx="210" cy="320" r="9"/>
+        </g>
+
+        <!-- HOTSPOT: diploma -> education (on the wall under the tactics board) -->
+        <g class="hot" data-open="education" tabindex="0" role="button" aria-label="Diploma: education">
+          <rect x="88" y="470" width="244" height="176" rx="4" fill="url(#g-wood)"/>
+          <rect x="100" y="482" width="220" height="152" fill="#f4efe2"/>
+          <rect x="107" y="489" width="206" height="138" fill="none" stroke="#c9a24a" stroke-width="1.2"/>
+          <image href="images/carleton-shield.svg" x="194" y="495" width="32" height="38"/>
+          <text x="210" y="550" class="sc-dip">CARLETON UNIVERSITY</text>
+          <text x="210" y="566" class="sc-dip small">Bachelor of Science</text>
+          <text x="210" y="579" class="sc-dip small">Computer Science · Cybersecurity Stream</text>
+          <text x="210" y="592" class="sc-dip small">Class of 2027</text>
+          <line x1="122" y1="612" x2="182" y2="612" stroke="#4a4f66" stroke-width="0.8"/>
+          <line x1="238" y1="612" x2="298" y2="612" stroke="#4a4f66" stroke-width="0.8"/>
+          <circle cx="210" cy="612" r="9" fill="#c8102e"/><circle cx="210" cy="612" r="5.5" fill="none" stroke="#f4c9cf" stroke-width="0.8"/>
+          <circle class="ping" cx="326" cy="476" r="9"/>
+        </g>
+
+        <!-- HOTSPOT: trophy cabinet -> projects -->
+        <g class="hot" data-open="projects" tabindex="0" role="button" aria-label="Trophy cabinet: projects">
+          <rect x="1240" y="228" width="300" height="352" rx="4" fill="url(#g-wood)"/>
+          <rect x="1252" y="240" width="276" height="328" fill="#0a1030"/>
+          <rect x="1252" y="240" width="276" height="328" fill="url(#g-pool-me)" opacity="0.45"/>
+          <rect x="1260" y="243" width="260" height="3" rx="1.5" class="sc-led me"/>
+          <rect x="1252" y="392" width="276" height="7" fill="#2a1a10"/>
+          <rect x="1252" y="540" width="276" height="7" fill="#2a1a10"/>
+
+          <!-- Cartoon trophy icons from Wikimedia Commons; credits in the footer -->
+          <ellipse cx="1390" cy="389" rx="30" ry="4" fill="#000" opacity="0.45"/>
+          <image href="images/trophies/world-cup.png" x="1362" y="248" width="56" height="140"/>
+          <text x="1390" y="407" class="sc-tag">GTA VI WIKI</text>
+          <ellipse cx="1320" cy="537" rx="36" ry="4" fill="#000" opacity="0.45"/>
+          <image href="images/trophies/champions-league.png" x="1279" y="408" width="82" height="128"/>
+          <text x="1320" y="555" class="sc-tag">DETECTION LAB</text>
+          <ellipse cx="1462" cy="537" rx="40" ry="4" fill="#000" opacity="0.45"/>
+          <image href="images/trophies/ballon-dor.png" x="1415.5" y="426" width="93" height="110"/>
+          <text x="1462" y="555" class="sc-tag">INSULIN PUMP</text>
+          <path d="M1252 240 L1330 240 L1270 568 L1252 568 Z" fill="#fff" opacity="0.035"/>
+          <rect x="1300" y="586" width="180" height="22" rx="3" fill="#0b1238"/>
+          <text x="1390" y="602" class="sc-label">TROPHY CABINET</text>
+          <circle class="ping" cx="1534" cy="234" r="9"/>
+        </g>
+
+        <!-- HOTSPOT: laptop on the bench -> terminal -->
+        <g class="hot" data-open="terminal" tabindex="0" role="button" aria-label="Laptop: interactive terminal">
+          <rect x="1079" y="548" width="92" height="62" rx="5" fill="#9aa3b8"/>
+          <rect x="1084" y="553" width="82" height="52" rx="2" fill="url(#g-screen)"/>
+          <text x="1091" y="572" class="sc-term">&gt;_ whoami</text>
+          <rect x="1091" y="580" width="44" height="3" fill="#f5c542" opacity="0.8"/>
+          <rect x="1091" y="588" width="60" height="3" fill="#8fa8ff" opacity="0.6"/>
+          <path d="M1071 610 h108 l8 7 h-124 z" fill="#c3cad8"/>
+          <circle class="ping" cx="1150" cy="550" r="9"/>
+        </g>
+
+        <!-- decoration: ball and cones by the board -->
+        <circle cx="236" cy="760" r="20" fill="#f3f5ef"/>
+        <path d="M236 748 l8 6 -3 9 h-10 l-3 -9 z" fill="#111"/>
+        <path d="M110 778 l12 -34 l12 34 z M330 778 l12 -34 l12 34 z" fill="#f08a24"/>
+        <rect x="108" y="776" width="28" height="4" fill="#f08a24"/><rect x="328" y="776" width="28" height="4" fill="#f08a24"/>
+
+        <!-- HOTSPOT: club crest on the carpet -> contact -->
+        <g class="hot" data-open="contact" tabindex="0" role="button" aria-label="Club crest: make an offer, contact">
+          <ellipse cx="800" cy="790" rx="300" ry="72" fill="#f5c542" fill-opacity="0.05" stroke="#f5c542" stroke-opacity="0.55" stroke-width="2"/>
+          <ellipse cx="800" cy="790" rx="262" ry="60" fill="none" stroke="#f5c542" stroke-opacity="0.35" stroke-width="1.5"/>
+          <text x="800" y="790" class="sc-crest" transform="translate(800 790) scale(1 0.42) translate(-800 -790)">RFC</text>
+          <text x="800" y="836" class="sc-offer">MAKE AN OFFER</text>
+          <circle class="ping" cx="800" cy="770" r="9"/>
+        </g>
+
+        <rect width="1600" height="900" fill="url(#g-vignette)" pointer-events="none"/>
+        <rect width="1600" height="900" class="sc-dark" pointer-events="none"/>
+      </svg>
+
+      <div class="scene-tip" id="scene-tip" role="status" aria-live="polite"></div>
+
+      <nav class="scene-menu" aria-label="Explore the dressing room">
+        <button data-open="profile"><kbd>1</kbd><b>My locker</b><small>Profile &amp; experience</small></button>
+        <button data-open="skills"><kbd>2</kbd><b>Tactics board</b><small>Skills</small></button>
+        <button data-open="projects"><kbd>3</kbd><b>Trophy cabinet</b><small>Projects</small></button>
+        <button data-open="terminal"><kbd>4</kbd><b>Laptop</b><small>Terminal</small></button>
+        <button data-open="education"><kbd>5</kbd><b>Diploma</b><small>Education</small></button>
+        <button data-open="contact"><kbd>6</kbd><b>Club crest</b><small>Contact</small></button>
+      </nav>
+      <a class="scene-scroll" href="#profile">Scroll for the full page ↓</a>
+    </section>
+
+    <dialog class="panel" id="panel" aria-labelledby="panel-title">
+      <header class="panel-head">
+        <span class="panel-kicker" id="panel-kicker"></span>
+        <h2 class="panel-title" id="panel-title"></h2>
+        <button class="panel-close" id="panel-close" type="button"><span class="pad b" aria-hidden="true">B</span>Back to the room</button>
+      </header>
+      <div class="panel-body" id="panel-body"></div>
+    </dialog>
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" id="profile">
       <div class="hero-main">
         <div class="hero-text">
+          <p class="kicker"><span>Career Mode</span>Season 26/27</p>
           <h1>Hi, I'm <span class="gradient">Rayan Ourdjini</span>.</h1>
           <p class="typed mono">&gt; <span id="typed"></span><span class="caret">|</span></p>
           <p class="lead">
-            Cybersecurity student at <strong>Carleton University</strong> who loves building and securing infrastructure.
+            <strong class="hwg">Here we go!</strong> I'll be working at <strong>Kinaxis</strong> for the Winter term.
           </p>
           <div class="cta">
-            <a class="btn primary" href="#projects">View my work</a>
-            <a class="btn" href="#terminal">Try the terminal ↓</a>
+            <a class="btn primary" href="#projects"><span class="pad a" aria-hidden="true">A</span>View my work</a>
+            <a class="btn" href="#terminal"><span class="pad y" aria-hidden="true">Y</span>Try the terminal</a>
           </div>
         </div>
-        <figure class="portrait tilt">
-          <img src="images/profile.jpg" alt="Rayan Ourdjini" width="600" height="800">
+        <figure class="pcard tilt" aria-label="Player card: Rayan Ourdjini">
+          <div class="pcard-inner">
+            <div class="pcard-photo">
+              <img src="images/profile.jpg" alt="Rayan Ourdjini" width="600" height="800">
+              <div class="pcard-ovr">
+                <b>88</b>
+                <span>DEV</span>
+                <svg class="pcard-flag" viewBox="0 0 24 12" aria-label="Canada"><rect width="24" height="12" fill="#fff"/><rect width="6" height="12" fill="#d52b1e"/><rect x="18" width="6" height="12" fill="#d52b1e"/><path d="M12 2.2l.9 1.8 1-.4-.4 2.3 1.4-1.2.3.9 1.3-.3-.6 1.6.6.3-2.3 1.7.3.9-2.2-.3V10h-.6V9.5l-2.2.3.3-.9-2.3-1.7.6-.3-.6-1.6 1.3.3.3-.9 1.4 1.2-.4-2.3 1 .4z" fill="#d52b1e"/></svg>
+              </div>
+              <img class="pcard-club" src="images/carleton-shield.svg" alt="Carleton University" width="34" height="40">
+            </div>
+            <figcaption>
+              <span class="pcard-name">OURDJINI</span>
+              <dl class="pcard-stats">
+                <div><dd>91</dd><dt>OPS</dt></div>
+                <div><dd>88</dd><dt>SEC</dt></div>
+                <div><dd>87</dd><dt>CODE</dt></div>
+                <div><dd>86</dd><dt>DEV</dt></div>
+                <div><dd>85</dd><dt>NET</dt></div>
+                <div><dd>84</dd><dt>CLD</dt></div>
+              </dl>
+            </figcaption>
+          </div>
         </figure>
       </div>
       <ul class="stats">
@@ -52,11 +365,22 @@
         <li><span class="num" data-count="10">0</span><span class="unit">+</span><span class="label">languages &amp; tools</span></li>
         <li><span class="num">2027</span><span class="label">graduating, Carleton</span></li>
       </ul>
+      <div class="ticker" aria-label="Latest news">
+        <span class="ticker-tag">Latest</span>
+        <div class="ticker-track">
+          <p class="ticker-run">
+            <span><b>Live:</b> GTA VI Wiki now up at gta-6wiki.com</span>
+            <span><b>Lab:</b> Sigma detections mapped to MITRE ATT&amp;CK</span>
+            <span><b>Record:</b> 5+ internships and counting</span>
+            <span><b>Academy:</b> graduating from Carleton in 2027</span>
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- Terminal -->
     <section id="terminal" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">01.</span> Play around</h2>
+      <h2 class="section-title"><span class="mono accent">01</span> Terminal</h2>
       <p class="section-sub">A real, working terminal. Type <code>help</code> to see what it can do.</p>
       <div class="mac" id="mac">
         <div class="mac-menubar">
@@ -103,55 +427,70 @@
         <button data-cmd="skills">skills</button>
         <button data-cmd="neofetch">neofetch</button>
         <button data-cmd="hack">hack</button>
+        <button data-cmd="goal">goal ⚽</button>
+        <button data-cmd="formation">formation</button>
       </div>
     </section>
 
     <!-- Experience -->
     <section id="experience" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">02.</span> Experience</h2>
+      <h2 class="section-title"><span class="mono accent">02</span> Experience</h2>
       <ol class="timeline">
         <li class="job">
-          <div class="job-head">
-            <h3>Software Developer Intern</h3>
-            <span class="mono date">Winter 2027</span>
+          <span class="crest logo"><img src="images/kinaxis.svg" alt="Kinaxis logo" width="134" height="34"></span>
+          <div class="job-body">
+            <div class="job-head">
+              <h3>Software Developer Intern</h3>
+              <span class="mono date">Winter 2027</span>
+            </div>
+            <p class="org">Kinaxis · Ottawa, ON <span class="xfer in">Incoming</span></p>
+            <p class="job-desc">Joining in January 2027 for DevOps work: Infrastructure as Code, CI/CD and cloud automation with Terraform, GitOps and ArgoCD.</p>
           </div>
-          <p class="org">Kinaxis · Ottawa, ON</p>
-          <p class="job-desc">Joining in January 2027 for DevOps work: Infrastructure as Code, CI/CD and cloud automation with Terraform, GitOps and ArgoCD.</p>
         </li>
         <li class="job">
-          <div class="job-head">
-            <h3>Software Developer Intern</h3>
-            <span class="mono date">Jan 2026 – Aug 2026</span>
+          <span class="crest logo"><img src="images/goc-flag.svg" alt="Government of Canada" width="156" height="76"></span>
+          <div class="job-body">
+            <div class="job-head">
+              <h3>Software Developer Intern</h3>
+              <span class="mono date">Jan 2026 – Aug 2026</span>
+            </div>
+            <p class="org">Shared Services Canada · Ottawa, ON <span class="xfer ">Loan · 8 mo</span></p>
+            <p class="job-desc">Automated deployment of containerized services with Kubernetes, Ansible and GitLab CI/CD, cutting provisioning from hours to minutes.</p>
           </div>
-          <p class="org">Shared Services Canada · Ottawa, ON</p>
-          <p class="job-desc">Automated deployment of containerized services with Kubernetes, Ansible and GitLab CI/CD, cutting provisioning from hours to minutes.</p>
         </li>
         <li class="job">
-          <div class="job-head">
-            <h3>Cybersecurity Specialist Intern</h3>
-            <span class="mono date">Sep 2024 – Apr 2025</span>
+          <span class="crest logo"><img src="images/goc-flag.svg" alt="Government of Canada" width="156" height="76"></span>
+          <div class="job-body">
+            <div class="job-head">
+              <h3>Cybersecurity Specialist Intern</h3>
+              <span class="mono date">Sep 2024 – Apr 2025</span>
+            </div>
+            <p class="org">National Defence (DND) · Gatineau, QC <span class="xfer ">Loan · 8 mo</span></p>
+            <p class="job-desc">Ran security assessments on naval communication systems and led remediation of critical configuration gaps.</p>
           </div>
-          <p class="org">National Defence (DND) · Gatineau, QC</p>
-          <p class="job-desc">Ran security assessments on naval communication systems and led remediation of critical configuration gaps.</p>
         </li>
         <li class="job">
-          <div class="job-head">
-            <h3>Software Developer Intern</h3>
-            <span class="mono date">Feb 2024 – Apr 2024</span>
+          <span class="crest logo"><img src="images/goc-flag.svg" alt="Government of Canada" width="156" height="76"></span>
+          <div class="job-body">
+            <div class="job-head">
+              <h3>Software Developer Intern</h3>
+              <span class="mono date">Feb 2024 – Apr 2024</span>
+            </div>
+            <p class="org">Canada Revenue Agency · Ottawa, ON <span class="xfer ">Loan · 3 mo</span></p>
+            <p class="job-desc">Built a DHCP traffic monitoring workflow that found and removed rogue routers across CRA sites.</p>
           </div>
-          <p class="org">Canada Revenue Agency · Ottawa, ON</p>
-          <p class="job-desc">Built a DHCP traffic monitoring workflow that found and removed rogue routers across CRA sites.</p>
         </li>
       </ol>
     </section>
 
     <!-- Projects -->
     <section id="projects" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">03.</span> Projects</h2>
+      <h2 class="section-title"><span class="mono accent">03</span> Projects</h2>
+      <p class="section-sub">A few things I have built.</p>
       <div class="cards">
         <article class="card tilt">
           <div class="card-top">
-            <span class="card-icon mono">★</span>
+            <span class="card-ovr" title="Rating"><b>92</b><i>WEB</i></span>
             <span class="card-links">
               <a class="card-link" href="https://gta-6wiki.com" target="_blank" rel="noopener" aria-label="Live site" title="Live site">↗</a>
             </span>
@@ -162,7 +501,7 @@
         </article>
         <article class="card tilt">
           <div class="card-top">
-            <span class="card-icon mono">⛨</span>
+            <span class="card-ovr" title="Rating"><b>90</b><i>SEC</i></span>
             <span class="card-links">
               <a class="card-link" href="https://github.com/rayjini/detection-engineering-lab" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
             </span>
@@ -173,7 +512,7 @@
         </article>
         <article class="card tilt">
           <div class="card-top">
-            <span class="card-icon mono">{ }</span>
+            <span class="card-ovr" title="Rating"><b>86</b><i>SYS</i></span>
             <span class="card-links">
               <a class="card-link" href="https://youtu.be/2lVR6Kb2LBk" target="_blank" rel="noopener" aria-label="Demo video" title="Demo video">▶</a>
               <a class="card-link" href="https://github.com/rayjini/Insulin-Pump-Solution" target="_blank" rel="noopener" aria-label="GitHub repo" title="GitHub repo">↗</a>
@@ -189,7 +528,32 @@
 
     <!-- Skills -->
     <section id="skills" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">04.</span> Skills</h2>
+      <h2 class="section-title"><span class="mono accent">04</span> Skills</h2>
+      <div class="tactics" aria-label="Tactics board: my starting eleven skills">
+        <div class="tb-head">
+          <span class="tb-title">Starting XI</span>
+          <span class="tb-meta">Formation <b>4-3-3</b></span>
+          <span class="tb-meta">Manager <b>R. Ourdjini</b></span>
+        </div>
+        <div class="tb-board">
+          <svg class="tb-lines" viewBox="0 0 105 68" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="1" y="1" width="103" height="66"/>
+            <line x1="52.5" y1="1" x2="52.5" y2="67"/>
+            <circle cx="52.5" cy="34" r="9.15"/>
+            <rect x="1" y="13.84" width="16.5" height="40.32"/><rect x="87.5" y="13.84" width="16.5" height="40.32"/>
+            <rect x="1" y="24.84" width="5.5" height="18.32"/><rect x="98.5" y="24.84" width="5.5" height="18.32"/>
+          </svg>
+          <svg class="tb-arrows" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs><marker id="tb-head" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z"/></marker></defs>
+            <path d="M47 50 Q 58 30 71 20" marker-end="url(#tb-head)"/>
+            <path d="M47 50 Q 62 62 71 80" marker-end="url(#tb-head)"/>
+            <path d="M28 13 Q 48 1 67 14" marker-end="url(#tb-head)"/>
+            <path d="M60 50 L 80 50" marker-end="url(#tb-head)"/>
+          </svg>
+          <div class="tb-squad" id="tb-squad"></div>
+        </div>
+        <p class="tb-note">Hover a magnet for the rating. Full attribute list below.</p>
+      </div>
       <div class="filters" id="skill-filters">
         <button class="active" data-filter="all">all</button>
         <button data-filter="lang">languages</button>
@@ -203,9 +567,10 @@
 
     <!-- Education & certs -->
     <section id="education" class="section reveal">
-      <h2 class="section-title"><span class="mono accent">05.</span> Education</h2>
+      <h2 class="section-title"><span class="mono accent">05</span> Education</h2>
       <div class="edu">
         <div class="edu-item">
+          <span class="crest logo"><img src="images/carleton.svg" alt="Carleton University logo" width="149" height="40"></span>
           <span class="mono date">Expected Dec 2027</span>
           <h3>Carleton University</h3>
           <p>B.Sc. Computer Science — Cybersecurity Stream</p>
@@ -216,19 +581,25 @@
 
     <!-- Contact -->
     <section id="contact" class="section reveal contact">
-      <h2 class="section-title center"><span class="mono accent">06.</span> Let's talk</h2>
+      <h2 class="section-title center"><span class="mono accent">06</span> Contact</h2>
       <p class="section-sub center">Always happy to chat — reach out on any of these.</p>
       <div class="contact-links">
-        <a class="btn primary" href="mailto:rayandz25@gmail.com">rayandz25@gmail.com</a>
-        <a class="btn" href="https://www.linkedin.com/in/rayan-ourdjini" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="https://github.com/rayjini" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="https://x.com/RayanJini" target="_blank" rel="noopener">X / Twitter</a>
+        <a class="btn primary" href="mailto:rayandz25@gmail.com"><span class="pad a" aria-hidden="true">A</span>rayandz25@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/rayan-ourdjini" target="_blank" rel="noopener"><span class="pad x" aria-hidden="true">X</span>LinkedIn</a>
+        <a class="btn" href="https://github.com/rayjini" target="_blank" rel="noopener"><span class="pad y" aria-hidden="true">Y</span>GitHub</a>
+        <a class="btn" href="https://x.com/RayanJini" target="_blank" rel="noopener"><span class="pad b" aria-hidden="true">B</span>X / Twitter</a>
       </div>
     </section>
   </main>
 
+  <div class="hintbar" aria-hidden="true">
+    <span><kbd>Q</kbd><kbd>E</kbd>Switch tab</span>
+    <span><kbd>Esc</kbd>Back to top</span>
+  </div>
+
   <footer class="mono">
-    <p>Built by Rayan Ourdjini</p>
+    <p><span class="ft">FT</span> Built by Rayan Ourdjini</p>
+    <p class="credits">Trophy icons via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:FIFA_World_Cup.png" target="_blank" rel="noopener">World Cup</a> (CC0), <a href="https://commons.wikimedia.org/wiki/File:UEFA_-_Champions_League.png" target="_blank" rel="noopener">Champions League</a> (CC BY-SA 3.0), <a href="https://commons.wikimedia.org/wiki/File:Bal%C3%B3n_de_oro.png" target="_blank" rel="noopener">Ballon d&#39;Or</a>.</p>
   </footer>
 
 
