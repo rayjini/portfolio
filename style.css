@@ -823,3 +823,65 @@ body {
 .sc-shirt-name.me, .sc-shirt-num.me { fill: #111; }
 footer .credits { margin-top: 0.6rem; font-family: var(--sans); font-size: 0.72rem; color: var(--muted); opacity: 0.75; }
 footer .credits a { text-decoration: underline; }
+
+/* ---------- Walkout / pack opening ---------- */
+.wo-lock, .wo-lock body { overflow: hidden; }
+.walkout {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden; cursor: pointer;
+  background: radial-gradient(60% 50% at 50% 45%, #121c4a, #03050f 70%);
+  transition: opacity 0.5s ease;
+}
+.walkout.out { animation: woout 0.5s ease both; pointer-events: none; }
+@keyframes woout { to { opacity: 0; } }
+.walkout > * { grid-area: 1 / 1; }
+.wo-rays {
+  position: absolute; left: 50%; top: 50%; margin: -90vmax 0 0 -90vmax; pointer-events: none;
+  width: 180vmax; height: 180vmax; opacity: 0;
+  background: repeating-conic-gradient(from 0deg, rgba(var(--accent-rgb), 0.22) 0 6deg, transparent 6deg 18deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0, transparent 45%); mask-image: radial-gradient(circle, #000 0, transparent 45%);
+}
+.walkout[data-stage]:not([data-stage="pack"]) .wo-rays { animation: rays 20s linear infinite, wofade 0.6s ease both; }
+@keyframes wofade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rays { to { transform: rotate(360deg); } }
+.wo-pack {
+  width: 200px; height: 290px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 0.3rem; padding-bottom: 2rem;
+  background: linear-gradient(150deg, #fff3c4, var(--accent) 30%, #a8781a 65%, var(--accent-2));
+  clip-path: polygon(0 6%, 50% 0, 100% 6%, 100% 94%, 50% 100%, 0 94%);
+  font-family: var(--display); color: #0b1108; text-transform: uppercase;
+  animation: packshake 1.4s ease-in both;
+}
+.wo-pack span { font-weight: 700; letter-spacing: 0.2em; font-size: 0.9rem; }
+.wo-pack b { font-weight: 800; font-style: italic; font-size: 2rem; }
+@keyframes packshake {
+  0% { transform: scale(0.6); opacity: 0; }
+  25% { transform: scale(1); opacity: 1; }
+  60%, 70%, 80%, 90% { transform: rotate(-3deg) scale(1.02); filter: brightness(1.2); }
+  65%, 75%, 85%, 95% { transform: rotate(3deg) scale(1.04); filter: brightness(1.5); }
+  100% { transform: scale(1.08); filter: brightness(2.2); }
+}
+.walkout[data-stage="pos"] .wo-pack, .walkout[data-stage="club"] .wo-pack, .walkout[data-stage="card"] .wo-pack { display: none; }
+.walkout[data-stage]:not([data-stage="pack"]) .wo-pack { animation: packburst 0.35s ease-in both; }
+@keyframes packburst { from { transform: scale(1.08); opacity: 1; filter: brightness(2.2); } to { transform: scale(2.5); opacity: 0; filter: brightness(3); } }
+.wo-step {
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem; opacity: 0; transform: scale(0.7);
+  font-family: var(--display); text-transform: uppercase; color: var(--text); text-align: center;
+}
+.wo-step > span:last-child { font-weight: 700; font-style: italic; font-size: clamp(1.2rem, 3vw, 1.8rem); letter-spacing: 0.15em; }
+.wo-flag .pcard-flag { width: clamp(140px, 22vw, 220px); height: auto; margin: 0; border-radius: 4px; }
+.wo-pos b { font-size: clamp(5rem, 16vw, 10rem); line-height: 0.9; font-weight: 800; font-style: italic; color: var(--accent-2); }
+.wo-club .crest { width: clamp(110px, 16vw, 150px); height: clamp(128px, 18.5vw, 174px); font-size: clamp(2.4rem, 5vw, 3.4rem); padding-bottom: 22px; }
+.walkout[data-stage="flag"] .wo-flag, .walkout[data-stage="pos"] .wo-pos, .walkout[data-stage="club"] .wo-club { animation: stepin 0.5s cubic-bezier(.2,.9,.3,1.3) both; }
+@keyframes stepin { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: none; } }
+.wo-card { opacity: 0; }
+.wo-card .pcard { width: clamp(240px, 30vw, 330px); filter: drop-shadow(0 0 60px rgba(var(--accent-rgb), 0.6)); }
+.walkout[data-stage="card"] .wo-card { animation: cardin 0.9s cubic-bezier(.2,.9,.3,1.15) both; }
+@keyframes cardin { from { opacity: 0; transform: perspective(900px) scale(0.4) rotateY(180deg); } 30% { opacity: 1; } to { opacity: 1; transform: perspective(900px) none; } }
+.wo-skip {
+  align-self: end; justify-self: end; margin: 1.25rem; padding: 0.5rem 1.1rem; cursor: pointer;
+  font: 700 0.95rem/1 var(--display); font-style: italic; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text); background: rgba(255, 255, 255, 0.1); border: 0;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+.wo-skip:hover { background: var(--accent); color: #0b1108; }
+
+.wo-shield { width: clamp(100px, 14vw, 140px); height: auto; filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.25)); }

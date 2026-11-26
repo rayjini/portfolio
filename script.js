@@ -482,6 +482,49 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
   ).join("");
 })();
 
+/* ---------- Pack opening walkout (once per visit) ---------- */
+(() => {
+  const card = document.querySelector(".pcard");
+  if (!card || reduceMotion) return;
+  try { if (sessionStorage.getItem("walkout-v2")) return; sessionStorage.setItem("walkout-v2", "1"); } catch (e) { /* storage blocked: just play it */ }
+
+  const flag = card.querySelector(".pcard-flag").outerHTML;
+  const wo = document.createElement("div");
+  wo.className = "walkout";
+  wo.setAttribute("aria-hidden", "true");
+  wo.innerHTML = `
+    <div class="wo-rays"></div>
+    <div class="wo-pack"><span>Rayan FC</span><b>Gold Pack</b></div>
+    <div class="wo-step wo-flag">${flag}<span>Canada</span></div>
+    <div class="wo-step wo-pos"><b>DEV</b><span>Software · DevOps · Security</span></div>
+    <div class="wo-step wo-club"><img class="wo-shield" src="images/carleton-shield.svg" alt="" width="34" height="40"><span>Carleton University</span></div>
+    <div class="wo-card"></div>
+    <button class="wo-skip" type="button">Skip ▸</button>`;
+  const clone = card.cloneNode(true);
+  clone.classList.remove("tilt");
+  clone.removeAttribute("aria-label");
+  wo.querySelector(".wo-card").appendChild(clone);
+  document.body.appendChild(wo);
+  document.documentElement.classList.add("wo-lock");
+
+  const stages = [["pack", 0], ["flag", 1400], ["pos", 2300], ["club", 3200], ["card", 4100]];
+  const timers = stages.map(([s, t]) => setTimeout(() => { wo.dataset.stage = s; }, t));
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    timers.forEach(clearTimeout);
+    wo.classList.add("out");
+    document.documentElement.classList.remove("wo-lock");
+    removeEventListener("keydown", finish);
+    window.dispatchEvent(new Event("walkout:done"));
+    setTimeout(() => wo.remove(), 600);
+  };
+  timers.push(setTimeout(finish, 6300));
+  addEventListener("keydown", finish);
+  wo.addEventListener("pointerdown", finish);
+})();
+
 /* ---------- Dressing room: hotspots open the matching section in a panel ---------- */
 (() => {
   const scene = document.getElementById("scene");
@@ -582,7 +625,8 @@ twitter   ${link("https://x.com/RayanJini", "@RayanJini")}`),
   window.addEventListener("resize", fit);
 
   // lights flicker on as the room appears
-  if (!reduceMotion) scene.classList.add("lights-on");
+  const lightsOn = () => scene.classList.add("lights-on");
+  if (!reduceMotion) document.documentElement.classList.contains("wo-lock") ? window.addEventListener("walkout:done", lightsOn, { once: true }) : lightsOn();
 })();
 
 /* ---------- The scoreboard ticks over: Rayan FC nicks a goal every so often ---------- */
